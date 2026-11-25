@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautyweb - Mascarillas Faciales</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        },
+                        pastel: {
+                            pink: '#FFF0F5',
+                            rose: '#FFE4E1',
+                            blush: '#FFD1DC',
+                            deep: '#D87093',
+                            magenta: '#C71585'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFF0F5;
+            color: #4A2E35;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #C71585 0%, #E11D48 50%, #FF69B4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(199, 21, 133, 0.15), 0 8px 10px -6px rgba(199, 21, 133, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FDA4AF;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E11D48;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-brand-200 selection:text-brand-700">
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-pink-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- EXTREMO IZQUIERDO: CARRITO DE COMPRAS -->
+            <div class="flex items-center">
+                <button onclick="toggleCartDrawer()" class="relative p-2.5 rounded-full bg-pink-100 hover:bg-pink-200 text-pastel-magenta transition-all duration-200 group flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-xl transition-transform group-hover:scale-110"></i>
+                    <span class="font-bold text-sm hidden sm:inline">Carrito</span>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-600 text-white font-bold text-xs rounded-full h-5 w-5 flex items-center justify-center border-2 border-white animate-pulse">
+                        0
+                    </span>
+                </button>
+            </div>
+
+            <!-- EXTREMO DERECHO: NAVEGACIÓN -->
+            <nav class="flex items-center space-x-1 sm:space-x-4">
+                <button onclick="scrollToSection('centella')" class="px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:text-pastel-magenta hover:bg-pink-50 transition">
+                    Centella
+                </button>
+                <button onclick="scrollToSection('mixsoon')" class="px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:text-pastel-magenta hover:bg-pink-50 transition">
+                    Mixsoon
+                </button>
+                <button onclick="scrollToSection('inicio')" class="px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-pastel-magenta to-brand-500 hover:from-brand-600 hover:to-pastel-magenta shadow-md hover:shadow-lg transition-all duration-300">
+                    <i class="fa-solid fa-house mr-1 sm:mr-2"></i>Inicio
+                </button>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- SECCIÓN DE INICIO / HERO -->
+        <section id="inicio" class="relative py-16 sm:py-24 bg-gradient-to-b from-pink-100/50 via-pastel-pink to-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <span class="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-widest text-pastel-magenta uppercase bg-pink-200/60 rounded-full border border-pink-300/50">
+                    Cuidado Facial Coreano Premium
+                </span>
+                
+                <h1 class="hero-title text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-tight mb-4 drop-shadow-sm">
+                    Beautyweb
+                </h1>
+                
+                <p class="max-w-2xl mx-auto text-base sm:text-xl text-gray-600 font-light mb-8">
+                    Descubre la máxima hidratación y nutrición con nuestras colecciones exclusivas de mascarillas faciales.
+                </p>
+
+                <div class="flex justify-center gap-4 mb-12">
+                    <button onclick="scrollToSection('catalog')" class="px-8 py-3.5 rounded-2xl bg-pastel-magenta text-white font-bold text-sm shadow-lg shadow-pink-500/25 hover:bg-brand-700 transition-all hover:scale-105">
+                        Ver Colección
+                    </button>
+                </div>
+
+                <!-- BANNER HERO VISUAL DE SKINCARE -->
+                <div class="max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white relative group">
+                    <img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&q=80&w=1200" 
+                         onerror="this.src='https://placehold.co/1200x500/FFE4E1/C71585?text=Beautyweb+Korean+Skincare'" 
+                         alt="Rutina de cuidado facial coreano con mascarillas" 
+                         class="w-full h-64 sm:h-96 object-cover object-center group-hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-6 text-left">
+                        <div class="text-white">
+                            <p class="text-xs uppercase tracking-widest font-bold text-pink-200">Piel de Cristal</p>
+                            <p class="text-lg sm:text-xl font-serif">Fórmulas botánicas fermentadas y extracto puro de Centella</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Adornos flotantes visuales -->
+            <div class="absolute -top-12 -left-12 w-64 h-64 bg-pink-300/30 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -right-12 w-80 h-80 bg-rose-300/30 rounded-full blur-3xl pointer-events-none"></div>
+        </section>
+
+        <!-- CATÁLOGO DE PRODUCTOS -->
+        <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            
+            <!-- MARCA 1: MIXSOON -->
+            <div id="mixsoon" class="mb-20 scroll-mt-28">
+                <div class="flex items-center space-x-4 mb-8 border-b-2 border-pink-200 pb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-200 flex items-center justify-center text-pastel-magenta text-2xl font-black">M</div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Mixsoon</h2>
+                        <p class="text-sm text-gray-500">Esencia pura y minimalista para una piel radiante</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="grid-mixsoon">
+                    <!-- Productos Mixsoon vía JS -->
+                </div>
+            </div>
+
+            <!-- MARCA 2: CENTELLA -->
+            <div id="centella" class="mb-12 scroll-mt-28">
+                <div class="flex items-center space-x-4 mb-8 border-b-2 border-pink-200 pb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-200 flex items-center justify-center text-pastel-magenta text-2xl font-black">C</div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Centella</h2>
+                        <p class="text-sm text-gray-500">Reparación intensiva y calma natural para tu piel</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="grid-centella">
+                    <!-- Productos Centella vía JS -->
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-pink-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-2xl font-serif font-bold text-pastel-magenta mb-2">Beautyweb</p>
+            <p class="text-xs text-gray-500">© 2026 Beautyweb. Todos los derechos reservados. Tienda especialista en mascarillas faciales.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALLE DEL PRODUCTO -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white text-gray-700 w-10 h-10 rounded-full flex items-center justify-center shadow-md transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modal-content" class="grid grid-cols-1 sm:grid-cols-2">
+                <!-- Se llena mediante Javascript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL LATERAL DEL CARRITO DE COMPRAS (DRAWER) -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-auto hidden"></div>
+        
+        <!-- Drawer Panel -->
+        <div id="cart-panel" class="absolute top-0 left-0 h-full w-full max-w-md bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 pointer-events-auto flex flex-col justify-between">
+            
+            <!-- Header Carrito -->
+            <div class="p-6 bg-pink-50 border-b border-pink-100 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-bag-shopping text-2xl text-pastel-magenta"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Tu Carrito</h3>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-gray-600 p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Contenido del Carrito -->
+            <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4">
+                <!-- Ítems insertados vía JS -->
+            </div>
+
+            <!-- Footer Carrito -->
+            <div class="p-6 bg-white border-t border-pink-100 shadow-lg space-y-4">
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>Envío</span>
+                        <span class="text-green-600 font-semibold">GRATIS</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t border-dashed">
+                        <span>Monto Total:</span>
+                        <span id="cart-total" class="text-pastel-magenta text-xl">$0.00</span>
+                    </div>
+                </div>
+
+                <button onclick="startCheckout()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-pastel-magenta to-brand-600 hover:from-brand-600 hover:to-pastel-magenta text-white font-bold text-base shadow-lg shadow-pink-500/30 transition-all flex items-center justify-center space-x-2">
+                    <span>Finalizar Compra</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL DE PAGO E INGRESO DE MONTO -->
+    <div id="payment-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 z-10 bg-pink-50 hover:bg-pink-100 text-gray-600 w-9 h-9 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-3 text-pastel-magenta">
+                    <i class="fa-solid fa-cash-register text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">Procesar Pago</h3>
+                <p class="text-xs text-gray-500 mt-1">Ingresa el monto para completar tu pedido</p>
+            </div>
+
+            <!-- Resumen de Total -->
+            <div class="bg-pink-50/80 rounded-2xl p-4 mb-5 border border-pink-100">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-semibold text-gray-600">Total a Pagar:</span>
+                    <span id="payment-modal-total" class="text-2xl font-extrabold text-pastel-magenta">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Input de Monto -->
+            <div class="mb-5">
+                <label for="user-amount-input" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                    Monto con el que pagas ($)
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
+                    <input type="number" id="user-amount-input" step="0.01" min="0" placeholder="0.00" class="w-full pl-8 pr-4 py-3 bg-pink-50/50 border border-pink-200 rounded-xl text-lg font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-pastel-magenta focus:bg-white transition">
+                </div>
+                <p id="payment-error-msg" class="text-xs text-rose-600 font-bold mt-2 hidden flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="payment-error-text">El monto ingresado no es correcto o es insuficiente.</span>
+                </p>
+            </div>
+
+            <button onclick="processPayment()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-pastel-magenta to-brand-600 hover:from-brand-600 hover:to-pastel-magenta text-white font-bold text-base shadow-lg shadow-pink-500/30 transition-all flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Confirmar Pago</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE RECIBO / CONFIRMACIÓN Y VUELTO -->
+    <div id="receipt-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-800">¡Compra Exitosa!</h3>
+            <p class="text-xs text-gray-500 mt-1 mb-5">Gracias por tu compra en <span class="font-bold text-pastel-magenta">Beautyweb</span></p>
+
+            <div class="bg-pink-50/60 rounded-2xl p-4 text-left space-y-2 border border-pink-100 mb-6 text-sm">
+                <div class="flex justify-between text-gray-600">
+                    <span>Monto de la Compra:</span>
+                    <span id="receipt-total" class="font-bold text-gray-800">$0.00</span>
+                </div>
+                <div class="flex justify-between text-gray-600">
+                    <span>Monto Recibido:</span>
+                    <span id="receipt-paid" class="font-bold text-gray-800">$0.00</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-pastel-magenta pt-2 border-t border-pink-200">
+                    <span>Vuelto a entregar:</span>
+                    <span id="receipt-change" class="text-xl">$0.00</span>
+                </div>
+            </div>
+
+            <button onclick="closeReceiptModal()" class="w-full py-3.5 rounded-2xl bg-pastel-magenta hover:bg-brand-700 text-white font-bold text-base shadow-lg transition">
+                Aceptar
+            </button>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium"></span>
+    </div>
+
+    <!-- JAVASCRIPT LÓGICO -->
+    <script>
+        // BASE DE DATOS DE PRODUCTOS (8 mascarillas con imágenes reales de skincare/mascarillas)
+        const products = [
+            // MIXSOON
+            {
+                id: 'm1',
+                brand: 'Mixsoon',
+                name: 'Mixsoon Bean Mask Sheet',
+                description: 'Mascarilla ultra-nutritiva formulada con extracto de soya fermentada que aporta firmeza e hidratación profunda.',
+                price: 4.50,
+                image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'm2',
+                brand: 'Mixsoon',
+                name: 'Mixsoon Centella Asiatica Sheet',
+                description: 'Calma al instante la piel irritada o sensible con 100% extracto de Centella pura.',
+                price: 3.90,
+                image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'm3',
+                brand: 'Mixsoon',
+                name: 'Mixsoon Bifida Mask Pack',
+                description: 'Fortalece la barrera cutánea dañada y mejora la elasticidad celular.',
+                price: 5.20,
+                image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'm4',
+                brand: 'Mixsoon',
+                name: 'Mixsoon Galactomyces Sheet',
+                description: 'Aclara el tono opaco y suaviza la textura dejando un acabado luminoso de piel de cristal.',
+                price: 4.80,
+                image: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&q=80&w=600'
+            },
+
+            // CENTELLA
+            {
+                id: 'c1',
+                brand: 'Centella',
+                name: 'Centella Ampoule Foam Mask',
+                description: 'Mascarilla en ampolla concentrada para una hidratación intensiva y restauración de humedad.',
+                price: 4.20,
+                image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'c2',
+                brand: 'Centella',
+                name: 'Centella Soothing Calming Mask',
+                description: 'Especialmente diseñada para pieles con tendencia al acné o enrojecimiento. Efecto refrescante instantáneo.',
+                price: 3.80,
+                image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'c3',
+                brand: 'Centella',
+                name: 'Centella Hyalu-Cica Water-Fit',
+                description: 'Combinación de ácido hialurónico y Centella para un impulso hidro-calmante inmediato.',
+                price: 4.90,
+                image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'c4',
+                brand: 'Centella',
+                name: 'Centella Tea-Trica Relief Sheet',
+                description: 'Enriquecida con árbol de té y centella para controlar el exceso de sebo y purificar los poros.',
+                price: 4.00,
+                image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=600'
+            }
+        ];
+
+        // ESTADO GLOBAL DEL CARRITO Y CANTIDADES
+        let cart = [];
+        let productQuantities = {};
+
+        // INICIALIZACIÓN
+        document.addEventListener('DOMContentLoaded', () => {
+            products.forEach(p => productQuantities[p.id] = 1);
+            renderProducts();
+            updateCartUI();
+        });
+
+        // RENDERIZAR TARJETAS DE PRODUCTO
+        function renderProducts() {
+            const mixsoonContainer = document.getElementById('grid-mixsoon');
+            const centellaContainer = document.getElementById('grid-centella');
+
+            mixsoonContainer.innerHTML = '';
+            centellaContainer.innerHTML = '';
+
+            products.forEach(product => {
+                const qty = productQuantities[product.id] || 1;
+                const cardHTML = `
+                    <div class="bg-white rounded-3xl p-4 shadow-sm border border-pink-100 card-hover flex flex-col justify-between group">
+                        
+                        <!-- Imagen con Click para Zoom Modal -->
+                        <div onclick="openModal('${product.id}')" class="relative overflow-hidden rounded-2xl cursor-pointer aspect-square bg-pink-50 mb-4">
+                            <img src="${product.image}" 
+                                 onerror="this.src='https://placehold.co/600x600/FFE4E1/C71585?text=Beautyweb+Mask'" 
+                                 alt="${product.name}" 
+                                 class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                <span class="bg-white/90 text-gray-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1">
+                                    <i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Detalles -->
+                        <div>
+                            <span class="text-xs font-semibold text-pastel-magenta uppercase tracking-wider">${product.brand}</span>
+                            <h3 onclick="openModal('${product.id}')" class="font-bold text-gray-800 hover:text-pastel-magenta transition cursor-pointer line-clamp-1 mt-0.5" title="${product.name}">
+                                ${product.name}
+                            </h3>
+                            <p class="text-lg font-extrabold text-gray-900 my-2">$${product.price.toFixed(2)}</p>
+                        </div>
+
+                        <!-- Controles de Cantidad y Agregar al Carrito -->
+                        <div class="space-y-3 pt-2 border-t border-gray-100">
+                            <div class="flex items-center justify-between bg-pink-50/80 rounded-xl p-1">
+                                <button onclick="changeQuantity('${product.id}', -1)" class="w-8 h-8 rounded-lg bg-white text-pastel-magenta font-bold hover:bg-pink-200 transition shadow-sm flex items-center justify-center">
+                                    <i class="fa-solid fa-minus text-xs"></i>
+                                </button>
+                                <span class="font-bold text-sm text-gray-700">${qty}</span>
+                                <button onclick="changeQuantity('${product.id}', 1)" class="w-8 h-8 rounded-lg bg-white text-pastel-magenta font-bold hover:bg-pink-200 transition shadow-sm flex items-center justify-center">
+                                    <i class="fa-solid fa-plus text-xs"></i>
+                                </button>
+                            </div>
+
+                            <button onclick="addToCart('${product.id}')" class="w-full py-2.5 rounded-xl bg-pastel-magenta hover:bg-brand-700 text-white font-bold text-xs shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Agregar al Carrito
+                            </button>
+                        </div>
+
+                    </div>
+                `;
+
+                if (product.brand === 'Mixsoon') {
+                    mixsoonContainer.innerHTML += cardHTML;
+                } else {
+                    centellaContainer.innerHTML += cardHTML;
+                }
+            });
+        }
+
+        // CAMBIAR CANTIDAD EN TARJETA
+        function changeQuantity(productId, delta) {
+            const currentQty = productQuantities[productId] || 1;
+            const newQty = currentQty + delta;
+            if (newQty >= 1 && newQty <= 10) {
+                productQuantities[productId] = newQty;
+                renderProducts();
+            }
+        }
+
+        // AGREGAR AL CARRITO
+        function addToCart(productId, countOverride = null) {
+            const product = products.find(p => p.id === productId);
+            const qtyToAdd = countOverride || productQuantities[productId] || 1;
+
+            const existingIndex = cart.findIndex(item => item.id === productId);
+
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += qtyToAdd;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: qtyToAdd
+                });
+            }
+
+            productQuantities[productId] = 1;
+
+            renderProducts();
+            updateCartUI();
+            showToast(`¡${product.name} agregado al carrito!`);
+        }
+
+        // ACTUALIZAR INTERFAZ DEL CARRITO
+        function updateCartUI() {
+            const cartBadge = document.getElementById('cart-badge');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartTotal = document.getElementById('cart-total');
+
+            const totalUnits = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalUnits;
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTotal.textContent = `$${subtotal.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-basket-shopping text-5xl mb-3 text-pink-200"></i>
+                        <p class="text-sm">Tu carrito está vacío</p>
+                    </div>
+                `;
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between p-3 bg-pink-50/50 rounded-2xl border border-pink-100">
+                    <img src="${item.image}" onerror="this.src='https://placehold.co/100x100/FFE4E1/C71585?text=Mask'" alt="${item.name}" class="w-14 h-14 object-cover rounded-xl">
+                    <div class="flex-grow px-3">
+                        <h4 class="font-bold text-xs text-gray-800 line-clamp-1">${item.name}</h4>
+                        <p class="text-xs text-gray-500">$${item.price.toFixed(2)} c/u</p>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <button onclick="updateCartItemQty('${item.id}', -1)" class="w-5 h-5 rounded bg-white text-gray-700 text-xs font-bold hover:bg-pink-200">-</button>
+                            <span class="text-xs font-bold text-gray-700">${item.quantity}</span>
+                            <button onclick="updateCartItemQty('${item.id}', 1)" class="w-5 h-5 rounded bg-white text-gray-700 text-xs font-bold hover:bg-pink-200">+</button>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-sm text-pastel-magenta">$${(item.price * item.quantity).toFixed(2)}</span>
+                        <button onclick="removeFromCart('${item.id}')" class="block text-gray-400 hover:text-red-500 text-xs mt-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // MODIFICAR CANTIDAD DENTRO DEL CARRITO
+        function updateCartItemQty(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index > -1) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                updateCartUI();
+            }
+        }
+
+        // ELIMINAR DEL CARRITO
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // TOGGLE DRAWER CARRITO
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            const panel = document.getElementById('cart-panel');
+
+            if (panel.classList.contains('-translate-x-full')) {
+                drawer.classList.remove('pointer-events-none');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    panel.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                backdrop.classList.add('opacity-0');
+                panel.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    backdrop.classList.add('hidden');
+                    drawer.classList.add('pointer-events-none');
+                }, 300);
+            }
+        }
+
+        // MODAL DETALLE / AGRANDAR PRODUCTO
+        function openModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('product-modal');
+            const modalContent = document.getElementById('modal-content');
+
+            modalContent.innerHTML = `
+                <div class="h-64 sm:h-auto bg-pink-50">
+                    <img src="${product.image}" onerror="this.src='https://placehold.co/600x600/FFE4E1/C71585?text=Beautyweb+Mask'" alt="${product.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-pastel-magenta uppercase tracking-wider">${product.brand}</span>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1 mb-2">${product.name}</h3>
+                        <p class="text-sm text-gray-600 mb-4 leading-relaxed">${product.description}</p>
+                        <p class="text-3xl font-extrabold text-pastel-magenta mb-6">$${product.price.toFixed(2)}</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <button onclick="addToCart('${product.id}', 1); closeModal();" class="w-full py-3.5 rounded-2xl bg-pastel-magenta hover:bg-brand-700 text-white font-bold text-sm shadow-lg transition">
+                            <i class="fa-solid fa-cart-plus mr-2"></i>Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        // DESPLAZAMIENTO SUAVE
+        function scrollToSection(sectionId) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // INICIAR PROCESO DE CHECKOUT
+        function startCheckout() {
+            if (cart.length === 0) {
+                showToast('Tu carrito está vacío');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('payment-modal-total').textContent = `$${total.toFixed(2)}`;
+            
+            const input = document.getElementById('user-amount-input');
+            input.value = '';
+            document.getElementById('payment-error-msg').classList.add('hidden');
+
+            toggleCartDrawer();
+            document.getElementById('payment-modal').classList.remove('hidden');
+            setTimeout(() => input.focus(), 100);
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+     
+       // PROCESAR Y VALIDAR EL PAGO INGRESADO
+        async function processPayment() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const inputEl = document.getElementById('user-amount-input');
+            const errorMsgEl = document.getElementById('payment-error-msg');
+            const errorTextEl = document.getElementById('payment-error-text');
+
+            const paidAmount = parseFloat(inputEl.value);
+
+            if (isNaN(paidAmount) || paidAmount <= 0) {
+                errorTextEl.textContent = 'Por favor, ingresa un monto válido.';
+                errorMsgEl.classList.remove('hidden');
+                return;
+            }
+
+            if (paidAmount < total) {
+                const faltante = (total - paidAmount).toFixed(2);
+                errorTextEl.textContent = `El monto es insuficiente. Falta $${faltante} para cubrir el total ($${total.toFixed(2)}).`;
+                errorMsgEl.classList.remove('hidden');
+                return;
+            }
+
+            errorMsgEl.classList.add('hidden');
+            const change = paidAmount - total;
+
+            // --- CONEXIÓN CON LA BASE DE DATOS ---
+            try {
+                await fetch('/api/ventas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        productos: cart.map(item => ({
+                            id: item.id,
+                            nombre: item.name,
+                            cantidad: item.quantity,
+                            precioUnitario: item.price
+                        })),
+                        total: total,
+                        montoPagado: paidAmount,
+                        vuelto: change
+                    })
+                });
+            } catch (error) {
+                console
+

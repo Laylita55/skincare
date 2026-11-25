@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautyweb - Skincare</title>
+    <style>
+        /* --- ESTILOS CSS --- */
+        :root {
+            --verde-pastel: #c8e6c9;
+            --verde-oscuro: #388e3c;
+            --beige: #f5f5dc;
+            --blanco: #ffffff;
+            --texto: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--beige);
+            color: var(--texto);
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--verde-pastel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: bold;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--verde-oscuro);
+        }
+
+        /* Hero / Encabezado */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            background-color: var(--blanco);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--verde-oscuro);
+            margin-bottom: 20px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-category {
+            background-color: var(--verde-pastel);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-category:hover {
+            background-color: var(--verde-oscuro);
+            color: var(--blanco);
+        }
+
+        /* Catálogo de Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: var(--blanco);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--verde-oscuro);
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-cart {
+            background-color: var(--beige);
+            color: var(--texto);
+        }
+
+        .btn-buy {
+            background-color: var(--verde-pastel);
+            color: var(--texto);
+        }
+
+        .btn-action:hover {
+            opacity: 0.8;
+        }
+
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background-color: var(--blanco);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Estilos del Carrito */
+        .cart-list {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn-delete {
+            background-color: #ffcdd2;
+            color: #b71c1c;
+            border: none;
+            border-radius: 5px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Beautyweb</h2>
+        <nav>
+            <a onclick="showCategory('all')">Inicio</a>
+            <a id="cart-counter" onclick="openCartModal()">Carrito (0)</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Beautyweb</h1>
+        <div class="category-buttons">
+            <button class="btn-category" onclick="showCategory('Mixsoon')">Mixsoon</button>
+            <button class="btn-category" onclick="showCategory('centella')">Centella</button>
+            <button class="btn-category" onclick="showCategory('madagascar')">Madagascar</button>
+        </div>
+    </section>
+
+    <main class="products-grid" id="product-container">
+        </main>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCartModal()">&times;</span>
+            <h3>Tu Carrito de Compras</h3>
+            <ul id="cart-items-list" class="cart-list">
+                </ul>
+            <div id="cart-total" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 15px;">
+                Total: $0
+            </div>
+            <button id="btn-buy-cart" class="btn-category" onclick="checkoutCart()" style="width: 100%;">Comprar Carrito</button>
+        </div>
+    </div>
+
+    <div id="buy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeBuyModal()">&times;</span>
+            <h3 id="modal-product-title">Comprar Producto</h3>
+            <p id="modal-product-price" style="margin: 10px 0; font-weight: bold;"></p>
+            <input type="email" id="user-email" placeholder="Ingrese su Gmail" required>
+            <input type="number" id="user-amount" placeholder="Ingrese el monto a pagar" required>
+            <button class="btn-category" onclick="processPayment()" style="width: 100%; margin-top: 10px;">Confirmar Pago</button>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de productos
+        const products = [
+            // Centella
+            { id: 1, name: "Aceite limpiador", category: "centella", price: 25, img: "https://picsum.photos/200?random=1" },
+            { id: 2, name: "Serum hidratante", category: "centella", price: 30, img: "https://picsum.photos/200?random=2" },
+            { id: 3, name: "Espuma limpiadora", category: "centella", price: 20, img: "https://picsum.photos/200?random=3" },
+            { id: 4, name: "Tónico", category: "centella", price: 22, img: "https://picsum.photos/200?random=4" },
+            { id: 5, name: "Espátula exfoliante", category: "centella", price: 15, img: "https://picsum.photos/200?random=5" },
+            
+            // Mixune
+            { id: 6, name: "Espátula de silicona", category: "mixsoon", price: 10, img: "https://picsum.photos/200?random=6" },
+            { id: 7, name: "Esponjas faciales vegetales", category: "mixsoon", price: 12, img: "https://picsum.photos/200?random=7" },
+            { id: 8, name: "Discos de algodón", category: "mixsoon", price: 8, img: "https://picsum.photos/200?random=8" },
+            { id: 9, name: "Protector solar", category: "mixsoon", price: 28, img: "https://picsum.photos/200?random=9" },
+             
+            // Madagascar
+            { id: 10, name: "Mascarilla hidratante", category: "madagascar", price: 18, img: "https://picsum.photos/200?random=10" },
+            { id: 11, name: "Mascarilla tonificante", category: "madagascar", price: 18, img: "https://picsum.photos/200?random=11" },
+            { id: 12, name: "Mascarilla para acné", category: "madagascar", price: 19, img: "https://picsum.photos/200?random=12" },
+            { id: 13, name: "Mascarilla para poros", category: "madagascar", price: 19, img: "https://picsum.photos/200?random=13" },
+            { id: 14, name: "Mascarilla de arcilla", category: "madagascar", price: 22, img: "https://picsum.photos/200?random=14" },
+            { id: 15, name: "Mascarilla nocturna", category: "madagascar", price: 24, img: "https://picsum.photos/200?random=15" }
+        ];
+
+        let cart = [];
+        let itemToBuy = null; // Guardará el producto o el objeto carrito a comprar
+
+        // Mostrar productos
+        function renderProducts(filterCategory = 'all') {
+            const container = document.getElementById('product-container');
+            container.innerHTML = '';
+
+            const filteredProducts = filterCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === filterCategory);
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">$${product.price}</p>
+                    <div class="product-actions">
+                        <button class="btn-action btn-cart" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                        <button class="btn-action btn-buy" onclick="openBuyModalDirect(${product.id})">Comprar</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filtrar por categoría
+        function showCategory(category) {
+            renderProducts(category);
+        }
+
+        // Agregar producto al Carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCartCounter();
+            alert(`¡"${product.name}" fue agregado al carrito!`);
+        }
+
+        // Eliminar producto del carrito
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCounter();
+            renderCartModal();
+        }
+
+        function updateCartCounter() {
+            document.getElementById('cart-counter').innerText = `Carrito (${cart.length})`;
+        }
+
+        // Abrir/Cerrar Modal del Carrito
+        function openCartModal() {
+            renderCartModal();
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        // Dibujar el contenido del Carrito en el Modal
+        function renderCartModal() {
+            const listContainer = document.getElementById('cart-items-list');
+            const totalContainer = document.getElementById('cart-total');
+            const buyBtn = document.getElementById('btn-buy-cart');
+            listContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = '<li>El carrito está vacío.</li>';
+                totalContainer.innerText = 'Total: $0';
+                buyBtn.style.display = 'none';
+                return;
+            }
+
+            buyBtn.style.display = 'block';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <span>${item.name} - <strong>$${item.price}</strong></span>
+                    <button class="btn-delete" onclick="removeFromCart(${index})">X</button>
+                `;
+                listContainer.appendChild(li);
+            });
+
+            totalContainer.innerText = `Total: $${total}`;
+        }
+
+        // Proceder a comprar todo lo del carrito
+        function checkoutCart() {
+            if (cart.length === 0) return;
+            
+            const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
+            const cartNames = cart.map(item => item.name).join(", ");
+            
+            itemToBuy = {
+                name: `Carrito (${cart.length} productos: ${cartNames})`,
+                price: totalAmount,
+                isCart: true
+            };
+
+            closeCartModal();
+            showPaymentModal(itemToBuy.name, itemToBuy.price);
+        }
+
+        // Comprar directamente un producto individual
+        function openBuyModalDirect(productId) {
+            const product = products.find(p => p.id === productId);
+            itemToBuy = {
+                name: product.name,
+                price: product.price,
+                isCart: false
+            };
+            showPaymentModal(itemToBuy.name, itemToBuy.price);
+        }
+
+        function showPaymentModal(title, price) {
+            document.getElementById('modal-product-title').innerText = `Comprar: ${title}`;
+            document.getElementById('modal-product-price').innerText = `Precio Total: $${price}`;
+            document.getElementById('user-email').value = '';
+            document.getElementById('user-amount').value = '';
+            document.getElementById('buy-modal').style.display = 'flex';
+        }
+
+        function closeBuyModal() {
+            document.getElementById('buy-modal').style.display = 'none';
+        }
+
+        // Procesar pago (y enviar a la BD de Termux si se conecta)
+        async function processPayment() {
+            const email = document.getElementById('user-email').value;
+            const amount = parseFloat(document.getElementById('user-amount').value);
+
+            if (!email || !email.includes('@')) {
+                alert("Por favor, ingrese un correo válido de Gmail.");
+                return;
+            }
+
+            if (isNaN(amount)) {
+                alert("Por favor, ingrese un monto válido.");
+                return;
+            }
+
+            if (amount < itemToBuy.price) {
+                alert(`El monto ingresado ($${amount}) es menor al precio pedido ($${itemToBuy.price}). Por favor complete el total.`);
+                return;
+            }
+
+            // Intentar guardar en backend en Termux (Backend opcional)
+            try {
+                await fetch('http://localhost:3000/api/comprar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        producto: itemToBuy.name,
+                        email: email,
+                        monto: amount
+                    })
+                });
+            } catch (err) {
+                console.log("No se pudo conectar a la base de datos de Termux, continuando modo local.");
+            }
+
+            // Aclaración del cambio
+            if (amount > itemToBuy.price) {
+                const cambio = amount - itemToBuy.price;
+                alert(`El monto ingresado es mayor al precio ($${itemToBuy.price}). Su cambio es de $${cambio}. ¡Compra procesada con éxito!`);
+            } else {
+                alert("¡Monto exacto ingresado! Compra procesada con éxito.");
+            }
+
+            // Si compró el carrito completo, lo vaciamos
+            if (itemToBuy.isCart) {
+                cart = [];
+                updateCartCounter();
+            }
+
+            closeBuyModal();
+        }
+
+        // Inicializar la carga de productos
+        renderProducts();
+    </script>
+</body>
+</html>
